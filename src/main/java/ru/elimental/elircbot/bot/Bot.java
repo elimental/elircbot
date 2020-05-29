@@ -21,14 +21,14 @@ import java.util.List;
 @Slf4j
 public class Bot extends PircBot {
 
-    private static final String VERSION = "ELIrcBot v.1.0";
     public static final String CHANNEL_PREFIX = "#";
+    private static final String VERSION = "ELIrcBot v.1.0";
 
+    private final MessageProcessor messageProcessor;
     private String serverAddress;
     private int serverPort;
     private List<String> channelsToJoin;
     private String nickName;
-    private final MessageProcessor messageProcessor;
 
     @Autowired
     public Bot(MessageProcessor messageProcessor) {

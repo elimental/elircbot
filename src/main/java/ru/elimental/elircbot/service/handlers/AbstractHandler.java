@@ -8,15 +8,13 @@ import static ru.elimental.elircbot.bot.Bot.CHANNEL_PREFIX;
 
 public abstract class AbstractHandler {
 
-    private final MessageProcessor messageProcessor;
-    private final Bot bot;
     protected final DataProvider dataProvider;
+    private final Bot bot;
 
-    AbstractHandler(MessageProcessor messageProcessor, DataProvider dataProvider, Bot bot) {
-        this.messageProcessor = messageProcessor;
+    AbstractHandler(DataProvider dataProvider, Bot bot, MessageProcessor messageProcessor) {
         this.dataProvider = dataProvider;
         this.bot = bot;
-        this.messageProcessor.addHandler(this);
+        messageProcessor.addHandler(this);
     }
 
     public abstract boolean handle(String channel, String sender, String message);

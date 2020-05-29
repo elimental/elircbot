@@ -12,7 +12,6 @@ import ru.elimental.elircbot.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Service
 @Transactional

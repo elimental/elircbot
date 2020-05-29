@@ -92,7 +92,7 @@ public class WeatherForecast {
         }
 
         static String getDirection(int degrees) {
-            int index = ((int)(degrees/STEP)) % MASK;
+            int index = ((int) (degrees / STEP)) % MASK;
             return values()[index].value;
         }
     }

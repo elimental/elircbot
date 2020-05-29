@@ -19,10 +19,10 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
-	@GenericGenerator(
-		name = "UUID",
-		strategy = "org.hibernate.id.UUIDGenerator"
-	)
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 }
