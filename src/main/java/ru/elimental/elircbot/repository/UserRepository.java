@@ -2,7 +2,7 @@ package ru.elimental.elircbot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.elimental.elircbot.model.User;
+import ru.elimental.elircbot.model.entity.User;
 
 import java.util.Optional;
 import java.util.UUID;

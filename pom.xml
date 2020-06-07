@@ -18,6 +18,7 @@
         <java.version>1.8</java.version>
         <pircbot.version>1.5.0</pircbot.version>
         <sysout-over-slf4j.version>1.0.2</sysout-over-slf4j.version>
+        <jsoup.version>1.13.1</jsoup.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -67,6 +68,12 @@
             <groupId>pircbot</groupId>
             <artifactId>pircbot</artifactId>
             <version>${pircbot.version}</version>
+        </dependency>
+        <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
         <!-- System.out >> sl4j -->
         <dependency>

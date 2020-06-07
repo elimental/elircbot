@@ -2,7 +2,8 @@ package ru.elimental.elircbot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.elimental.elircbot.service.handlers.AbstractHandler;
+import ru.elimental.elircbot.repository.DataProvider;
+import ru.elimental.elircbot.service.messagehandlers.AbstractHandler;
 
 import java.util.ArrayList;
 import java.util.List;

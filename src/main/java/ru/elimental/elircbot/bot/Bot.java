@@ -8,6 +8,7 @@ import org.jibble.pircbot.PircBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import ru.elimental.elircbot.repository.DataProvider;
 import ru.elimental.elircbot.service.MessageProcessor;
 
 import javax.annotation.PostConstruct;
@@ -25,14 +26,16 @@ public class Bot extends PircBot {
     private static final String VERSION = "ELIrcBot v.1.0";
 
     private final MessageProcessor messageProcessor;
+    private final DataProvider dataProvider;
     private String serverAddress;
     private int serverPort;
     private List<String> channelsToJoin;
     private String nickName;
 
     @Autowired
-    public Bot(MessageProcessor messageProcessor) {
+    public Bot(MessageProcessor messageProcessor, DataProvider dataProvider) {
         this.messageProcessor = messageProcessor;
+        this.dataProvider = dataProvider;
     }
 
     @PostConstruct
@@ -70,5 +73,10 @@ public class Bot extends PircBot {
     @Override
     protected void onMessage(String channel, String sender, String login, String hostname, String message) {
         messageProcessor.handleMessage(channel, sender, message);
+    }
+
+    public void sendAndSaveMessage(String channel, String message) {
+        sendMessage(CHANNEL_PREFIX + channel, message);
+        dataProvider.saveMessage(channel, getName(), message);
     }
 }

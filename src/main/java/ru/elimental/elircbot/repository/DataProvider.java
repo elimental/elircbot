@@ -1,19 +1,16 @@
-package ru.elimental.elircbot.service;
+package ru.elimental.elircbot.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.elimental.elircbot.model.Channel;
-import ru.elimental.elircbot.model.Message;
-import ru.elimental.elircbot.model.User;
-import ru.elimental.elircbot.repository.ChannelRepository;
-import ru.elimental.elircbot.repository.MessageRepository;
-import ru.elimental.elircbot.repository.UserRepository;
+import ru.elimental.elircbot.model.entity.Channel;
+import ru.elimental.elircbot.model.entity.Message;
+import ru.elimental.elircbot.model.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Service
+@Component
 @Transactional
 public class DataProvider {
 

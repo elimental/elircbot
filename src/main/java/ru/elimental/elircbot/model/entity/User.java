@@ -1,4 +1,4 @@
-package ru.elimental.elircbot.model;
+package ru.elimental.elircbot.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

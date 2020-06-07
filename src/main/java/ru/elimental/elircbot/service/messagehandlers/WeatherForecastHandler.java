@@ -1,4 +1,4 @@
-package ru.elimental.elircbot.service.handlers;
+package ru.elimental.elircbot.service.messagehandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ru.elimental.elircbot.bot.Bot;
 import ru.elimental.elircbot.model.dto.WeatherForecast;
-import ru.elimental.elircbot.service.DataProvider;
+import ru.elimental.elircbot.repository.DataProvider;
 import ru.elimental.elircbot.service.MessageProcessor;
 
 import java.time.Duration;
@@ -44,11 +44,11 @@ public class WeatherForecastHandler extends AbstractHandler {
 
     @Override
     public boolean handle(String channel, String sender, String message) {
-        if (!message.startsWith("!погода")) {
-            return false;
+        if (message.startsWith("!погода") || message.startsWith("!pogoda")) {
+            doRequest(channel, sender, message);
+            return true;
         }
-        doRequest(channel, sender, message);
-        return true;
+        return false;
     }
 
     void doRequest(String channel, String sender, String message) {
@@ -56,7 +56,7 @@ public class WeatherForecastHandler extends AbstractHandler {
             String city = message.substring(7).trim();
             String senderString = sender + ": ";
             if (city.isEmpty()) {
-                sendMessage(channel, senderString + ERROR_EMPTY_CITY);
+                bot.sendAndSaveMessage(channel, senderString + ERROR_EMPTY_CITY);
                 return;
             }
             LocalDateTime current = LocalDateTime.now();
@@ -66,7 +66,7 @@ public class WeatherForecastHandler extends AbstractHandler {
                 setLastRequestCountReset(current);
                 requestCount.set(0);
             } else if (requestCount.get() >= REQUEST_LIMIT) {
-                sendMessage(channel, senderString + ERROR_OVER_LIMIT_REQUEST_MESSAGE);
+                bot.sendAndSaveMessage(channel, senderString + ERROR_OVER_LIMIT_REQUEST_MESSAGE);
                 return;
             }
             RestTemplate restTemplate = new RestTemplate();
@@ -78,25 +78,25 @@ public class WeatherForecastHandler extends AbstractHandler {
             } catch (Exception e) {
                 log.error(e.getMessage());
                 e.printStackTrace();
-                sendMessage(channel, senderString + ERROR_MESSAGE);
+                bot.sendAndSaveMessage(channel, senderString + ERROR_MESSAGE);
                 return;
             } finally {
                 requestCount.incrementAndGet();
             }
             String body = response.getBody();
             if (body == null) {
-                sendMessage(channel, senderString + ERROR_MESSAGE);
+                bot.sendAndSaveMessage(channel, senderString + ERROR_MESSAGE);
             }
             ObjectMapper objectMapper = new ObjectMapper();
             WeatherForecast weatherForecast;
             try {
                 weatherForecast = objectMapper.readValue(response.getBody(), WeatherForecast.class);
             } catch (Exception e) {
-                sendMessage(channel, senderString + ERROR_MESSAGE);
+                bot.sendAndSaveMessage(channel, senderString + ERROR_MESSAGE);
                 return;
             }
             weatherForecast.setCity(city);
-            sendMessage(channel, senderString + weatherForecast.toString());
+            bot.sendAndSaveMessage(channel, senderString + weatherForecast.toString());
         }).start();
     }
 
