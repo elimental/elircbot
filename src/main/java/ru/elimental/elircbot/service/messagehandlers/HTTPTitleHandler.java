@@ -42,7 +42,7 @@ public class HTTPTitleHandler extends AbstractHandler {
             int end = message.indexOf(" ", start);
             String url = end == -1 ? message.substring(start) : message.substring(start, end);
             String replyMessage = null;
-            if (url.contains("youtube.com")) {
+            if (url.contains("youtube.com") || url.contains("youtu.be")) {
                 try {
                     String videoId = getYouTubeVideoId(url);
                     RestTemplate restTemplate = new RestTemplate();
@@ -70,10 +70,18 @@ public class HTTPTitleHandler extends AbstractHandler {
     }
 
     private String getYouTubeVideoId(String url) throws MalformedURLException {
-        URL youTubeUrl = new URL(url);
-        String query = youTubeUrl.getQuery();
-        int start = query.indexOf("v=");
-        int end = query.indexOf("&", start);
-        return end == -1 ? query.substring(start + 2) : query.substring(start + 2, end);
+        String videoId = null;
+        if (url.contains("youtube.com")) {
+            URL youTubeUrl = new URL(url);
+            String query = youTubeUrl.getQuery();
+            int start = query.indexOf("v=");
+            int end = query.indexOf("&", start);
+            videoId = end == -1 ? query.substring(start + 2) : query.substring(start + 2, end);
+        } else {
+            int start = url.indexOf("://youtu.be/");
+            int end = url.indexOf(" ", start);
+            videoId = end == -1 ? url.substring(start + 12) : url.substring(start, end);
+        }
+        return videoId;
     }
 }
