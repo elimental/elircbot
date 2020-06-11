@@ -13,6 +13,7 @@ import ru.elimental.elircbot.service.MessageProcessor;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 @Component
@@ -23,7 +24,7 @@ import java.util.List;
 public class Bot extends PircBot {
 
     public static final String CHANNEL_PREFIX = "#";
-    private static final String VERSION = "ELIrcBot v.1.0";
+    private static final String VERSION = "ELIrcBot v.1.1";
 
     private final MessageProcessor messageProcessor;
     private final DataProvider dataProvider;
@@ -51,6 +52,9 @@ public class Bot extends PircBot {
     public void start() {
         try {
             connect(serverAddress, serverPort);
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            start();
         } catch (IOException | IrcException e) {
             e.printStackTrace();
         }
@@ -65,6 +69,9 @@ public class Bot extends PircBot {
     protected void onDisconnect() {
         try {
             reconnect();
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            onDisconnect();
         } catch (IOException | IrcException e) {
             e.printStackTrace();
         }
