@@ -64,13 +64,13 @@ public class HTTPTitleHandler extends AbstractHandler {
                 }
             }
             if (replyMessage != null && !replyMessage.isEmpty()) {
-                bot.sendAndSaveMessage(channel, replyMessage + " (" + url + ")");
+                bot.sendAndSaveMessage(channel, replyMessage);
             }
         }).start();
     }
 
     private String getYouTubeVideoId(String url) throws MalformedURLException {
-        String videoId = null;
+        String videoId;
         if (url.contains("youtube.com")) {
             URL youTubeUrl = new URL(url);
             String query = youTubeUrl.getQuery();
