@@ -23,7 +23,7 @@ import java.util.List;
 public class Bot extends PircBot {
 
     public static final String CHANNEL_PREFIX = "#";
-    private static final String VERSION = "ELIrcBot v.1.1";
+    private static final String VERSION = "ELIrcBot v.1.2";
 
     @Value("${irc.serverAddress}")
     private String serverAddress;
