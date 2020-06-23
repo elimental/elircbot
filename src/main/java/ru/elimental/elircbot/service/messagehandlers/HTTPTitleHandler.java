@@ -30,13 +30,13 @@ public class HTTPTitleHandler extends AbstractHandler {
     @Override
     public boolean handle(String channel, String sender, String message) {
         if (message.contains("http://") || message.contains("https://")) {
-            doRequest(channel, sender, message);
+            doRequest(channel, message);
             return true;
         }
         return false;
     }
 
-    private void doRequest(String channel, String sender, String message) {
+    private void doRequest(String channel, String message) {
         new Thread(() -> {
             int start = message.contains("http://") ? message.indexOf("http://") : message.indexOf("https://");
             int end = message.indexOf(" ", start);
@@ -46,7 +46,7 @@ public class HTTPTitleHandler extends AbstractHandler {
                 try {
                     String videoId = getYouTubeVideoId(url);
                     RestTemplate restTemplate = new RestTemplate();
-                    ResponseEntity<String> response = null;
+                    ResponseEntity<String> response;
                     response = restTemplate.getForEntity(YOUTUBE_API_URL + videoId, String.class);
                     ObjectMapper objectMapper = new ObjectMapper();
                     YouTubeReply youTubeReply = objectMapper.readValue(response.getBody(), YouTubeReply.class);
