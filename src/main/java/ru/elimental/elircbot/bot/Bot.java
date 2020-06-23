@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.PircBot;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.elimental.elircbot.repository.DataProvider;
 import ru.elimental.elircbot.service.MessageProcessor;
@@ -17,7 +17,6 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 
 @Component
-@ConfigurationProperties(prefix = "irc")
 @Getter
 @Setter
 @Slf4j
@@ -26,12 +25,20 @@ public class Bot extends PircBot {
     public static final String CHANNEL_PREFIX = "#";
     private static final String VERSION = "ELIrcBot v.1.1";
 
+    @Value("${irc.serverAddress}")
+    private String serverAddress;
+
+    @Value("${irc.serverPort}")
+    private int serverPort;
+
+    @Value("${irc.channelsToJoin}")
+    private List<String> channelsToJoin;
+
+    @Value("${irc.nickName}")
+    private String nickName;
+
     private final MessageProcessor messageProcessor;
     private final DataProvider dataProvider;
-    private String serverAddress;
-    private int serverPort;
-    private List<String> channelsToJoin;
-    private String nickName;
 
     @Autowired
     public Bot(MessageProcessor messageProcessor, DataProvider dataProvider) {
