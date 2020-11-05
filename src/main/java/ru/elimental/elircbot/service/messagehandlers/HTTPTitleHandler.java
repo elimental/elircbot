@@ -20,7 +20,7 @@ import java.net.URL;
 public class HTTPTitleHandler extends AbstractHandler {
 
     private final static String YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet" +
-            "&key=AIzaSyDDmNKXo6fz3BoBllqjGc9ugxErq606iRM&id=";
+            "&key=";
 
     @Autowired
     HTTPTitleHandler(DataProvider dataProvider, Bot bot, MessageProcessor messageProcessor) {
