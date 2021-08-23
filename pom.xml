@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <pircbot.version>1.5.0</pircbot.version>
         <sysout-over-slf4j.version>1.0.2</sysout-over-slf4j.version>
-        <jsoup.version>1.13.1</jsoup.version>
+        <jsoup.version>1.14.2</jsoup.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
